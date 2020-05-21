@@ -1,45 +1,44 @@
 import * as React from 'react';
-import { Image, View, TouchableOpacity, Text, ScrollView } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack'
 import Ion from 'react-native-vector-icons/Ionicons';
-import logo from '../../../../assets/w.png';
-import TeamsConfigScreen from './teamAdmin/TeamsAdminScreen';
 
+//Screens comonents
 import TeamAdmin from './teamAdmin/MainScreen';
 import Messages from './message/MainScreen';
-import News from './news/MainScreen';
+import Espiritual from './espiritual/MainScreen';
 
+//Context provider for admin
+import { AdminProvider } from '../../../contexts/Admin';
+
+//Navigators
 const AdminTab = createBottomTabNavigator();
-
-const nameTeamsScreen = "Equipes";
-const nameNewsScreen = "Noticias";
-const nameInstituitionsScre = "Instituições";
-const nameMensagesScreen = "Menssgens";
-
 const AdminStack = createStackNavigator();
+
+//screens names
+const nameTeamsScreen = "Equipes";
+const nameMensagesScreen = "Noticías";
+const nameEspiritualScreen = "Espiritual";
 
 function MainScreen () {
 	return(
-		<AdminTab.Navigator headerMode="screen"  screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
+		<AdminProvider>
+			<AdminTab.Navigator headerMode="screen"  screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
     		<AdminTab.Screen name={nameTeamsScreen} component={TeamAdmin} />
     		<AdminTab.Screen name={nameMensagesScreen} component={Messages} />
-				<AdminTab.Screen name={nameNewsScreen} component={News} />
-    	</AdminTab.Navigator>
+				<AdminTab.Screen name={nameEspiritualScreen} component={Espiritual} />
+			</AdminTab.Navigator>
+		</AdminProvider>
 	);
 }
 
-
-
 export default function AdminScreen ({ navigation }){
-
-  	return (		
+	return (		
 		<AdminStack.Navigator >
 			<AdminStack.Screen name="Admin" component={MainScreen} options={{ headerShown: false }}/>
 		</AdminStack.Navigator>
-  	);	
+  );	
 }
-
 
 const screenOptions = ({ route }) => ({
 	tabBarIcon: ({ focused, color, size }) => {
@@ -48,10 +47,10 @@ const screenOptions = ({ route }) => ({
 	
     	if(route.name == nameTeamsScreen){
     	  iconName = "md-people";
-			}else if(route.name == nameNewsScreen){
-				iconName = 'md-paper';
+			}else if(route.name == nameEspiritualScreen){
+				iconName = "ios-flame";
 			}else{
-    	  iconName = "md-quote";
+    	  iconName = "md-paper";
     	}
 
     	return <Ion name={iconName} color={iconColor} size={30}></Ion>

@@ -47,7 +47,7 @@ export default function MyPlansScreen({ route, navigation }) {
   	<View style={{ backgroundColor: config.backgroungColor, flex: 1, justifyContent: 'center', alignItems: 'center' }}>
     	<View style={{ elevation: 5, marginBottom: 15, flexDirection: 'row', justifyContent:'space-between', marginTop: 15, height:60, alignItems: 'center', width: '95%', backgroundColor: '#fff'}}>
       	<Text style={{marginLeft: 10, fontWeight: 'bold', fontSize: 20 }}>Planos de leitura</Text>
-				<TouchableOpacity style={{ marginRight: 15}} onPress={ () => navigation.navigate('Planos')}>
+				<TouchableOpacity style={{ marginRight: 15}} onPress={ () => navigation.navigate('Todos')}>
         	<Ion name="ios-add-circle-outline" size={50}/>
         </TouchableOpacity>
       </View>

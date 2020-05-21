@@ -12,7 +12,7 @@ const config = require('../../../config/config.json');
 export default function AllPrayersScreen ({ route, navigation }){
 	
 	const [ praysToShow, setPraystoShow ] = useState([]);
-const { loading, downloadPrays, allPrays, userPrays, updatePrays } = useContext(PraysContext);
+  const { loading, downloadPrays, allPrays, userPrays, updatePrays } = useContext(PraysContext);
 
 	useEffect(() => {
 		downloadPrays();
@@ -100,7 +100,14 @@ const { loading, downloadPrays, allPrays, userPrays, updatePrays } = useContext(
 			<View style={{ marginTop: 20 }}>
 				<ActivityIndicator color='#FCDE0F' size={40}/>
 			</View>
-		);
+    );
+  
+  if(praysToShow.length == 0)
+    return(
+      <View style={{ marginTop: 20, alignItems: 'center'}}>
+				<Text>Nenhum plano disponível o momento</Text>
+			</View>
+    )
 
   return (
     <View style={{ backgroundColor: config.backgroungColor, flex: 1, justifyContent: 'center', alignItems: 'center' }}>

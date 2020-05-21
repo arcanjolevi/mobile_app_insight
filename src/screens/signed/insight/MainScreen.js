@@ -28,7 +28,7 @@ export default function MainScreen (){
           }
         }}
       >
-        <PrayersStack.Screen name='Comunhão' component={ MyPrayersScreen }  />        
+        <PrayersStack.Screen name='Para Líderes' component={ MyPrayersScreen }  />        
         <PrayersStack.Screen name='Planos' component={ AllPrayersScreen } />        
       </PrayersStack.Navigator>
 		</PraysProvider>

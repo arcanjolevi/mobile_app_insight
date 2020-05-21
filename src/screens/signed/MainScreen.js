@@ -1,34 +1,48 @@
 import * as React from 'react';
-import { Image } from 'react-native';
+import { useContext, useState } from 'react';
+import { Image, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack'
 import Ion from 'react-native-vector-icons/Ionicons';
 
 import plansStack from './plans/MainScreen';
 import homeStack from './home/MainScreen';
-import prayersStack from './prays/MainScreen';
+import prayersStack from './insight/MainScreen';
 import settingStack from './settings/MainScreen';
 import AdminScreen from './admin/MainScreen';
+import TeamScreen from './team/MainScreen';
 
+import AuthContext from '../../contexts/Auth';
 
 import logo from '../../../assets/w.png'
 
 const SignedTab = createBottomTabNavigator();
 
 const nameHomeScreen = "Home";
-const namePlansScreen = "Devocional";
-const namePrayersScreen = "Comunhão";
+const namePlansScreen = "Planos";
+const namePrayersScreen = "Insight";
 const nameSettingsScreen = "Configurações";
+const nameTeamScreen = "Equipes";
 
 const SignedStack = createStackNavigator();
+
+
+function teamEnable(){
+	const { team, admin } = useContext(AuthContext);
+	if(team || admin)
+		return <SignedTab.Screen name={namePrayersScreen} component={prayersStack} />;
+		
+}	
+
 
 function SignedScreen () {
 	return(
 		<SignedTab.Navigator screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
     		<SignedTab.Screen name={nameHomeScreen} component={homeStack} />
     		<SignedTab.Screen name={namePlansScreen} component={plansStack} />
-    		<SignedTab.Screen name={namePrayersScreen} component={prayersStack} />
-    		<SignedTab.Screen name={nameSettingsScreen} component={settingStack} />
+				{teamEnable()}
+    		<SignedTab.Screen name={nameTeamScreen} component={TeamScreen} />
+				<SignedTab.Screen name={nameSettingsScreen} component={settingStack} />
     	</SignedTab.Navigator>
 	);
 }
@@ -52,12 +66,14 @@ const screenOptions = ({ route }) => ({
     	let iconName;
 	
     	if(route.name == nameHomeScreen){
-    	  iconName = "ios-bulb";
+    	  iconName = "md-home";
     	}else if( route.name == namePlansScreen ){
     	  iconName = "md-book";
     	}else if( route.name == namePrayersScreen ){
-    	  iconName = "ios-flame";
-    	}else {
+    	  iconName = "ios-bulb";
+    	}else if(route.name == nameTeamScreen){
+				iconName = 'ios-people';
+			}else {
     	  iconName = "md-options";
     	}
 

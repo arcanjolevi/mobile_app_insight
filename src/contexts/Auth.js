@@ -8,22 +8,29 @@ export function AuthProvider ({ children }) {
 	const [ isSigned, setIsSigned ] = useState(false);
 	const [ userData, setUserData ] = useState({});
 	const [ token, setToken ] = useState('');	
-	const [ admin, setAdmin ] = useState(true);
+	const [ admin, setAdmin ] = useState(false);
+	const [ team, setTeam ] = useState(false);
 
 	async function initAuth () {
 		const t = await AsyncStorage.getItem('userToken');
 		setToken(t);		
 		console.log("Usuario Autenticado: ", (t != null));
 		const userDataStorage = await AsyncStorage.getItem('userData');
-		setUserData(JSON.parse(userDataStorage));
+		setUserData(JSON.parse(userDataStorage));	
 		setIsSigned(!!t);
 		setIsLoading(false);
 	}
 
 	useEffect( () => {	
-		console.log('hehehe');	
 		initAuth();
 	}, []);
+
+	useEffect(() => {
+		console.log('team', userData.team != '');
+		console.log('admin', userData.admin);
+		setAdmin(userData.admin);
+		setTeam(userData.team != '');
+	}, [userData]);
 
 
 	async function downloadAppData(){
@@ -53,7 +60,9 @@ export function AuthProvider ({ children }) {
 				await AsyncStorage.setItem('userData', JSON.stringify(response.data.user));
 				setToken(response.data.token);
 				setUserData(response.data.user);
-
+				setAdmin(userData.admin);
+						
+				
 				try{
 					const responsePrays = response.data.user.prays;
 					const responsePlans = response.data.user.plans;
@@ -106,7 +115,8 @@ export function AuthProvider ({ children }) {
 				user: userData,
 				signIn,
 				signOut,
-				admin
+				admin,
+				team
       }
     }>
       {children}
@@ -122,7 +132,8 @@ const AuthContext = createContext({
     signOut: Function,
 		loading: Boolean,
 		user: Object,
-		admin: Boolean
+		admin: Boolean,
+		team: Boolean
 });
 
 export default AuthContext ;

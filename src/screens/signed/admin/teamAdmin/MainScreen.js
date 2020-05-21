@@ -32,7 +32,7 @@ export default function MainScreen (){
       }}
       >      
         <TeamAdminStack.Screen name='Equipes' component={ TeamAdmin } />
-        <TeamAdminStack.Screen name='Manutencao' component={ MantainTeams }   />
+        <TeamAdminStack.Screen name='Manutenção' component={ MantainTeams }   />
         <TeamAdminStack.Screen name='Add Equipe' component={ AddTeamScreen }   />
         <TeamAdminStack.Screen name='Alterar' component={ ModifyTeam }   />
         <TeamAdminStack.Screen name='Add Integrante' component={ AddMembers }   />

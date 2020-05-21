@@ -30,8 +30,8 @@ export default function MainScreen (){
         }
       }}
       >      
-        <MessagesStack.Screen name='Mensagens' component={ MessagesScreen } />
-        <MessagesStack.Screen name='Nova Mensagem' component={ NewMessageScreen } />
+        <MessagesStack.Screen name='Notícias' component={ MessagesScreen } />
+        <MessagesStack.Screen name='Nova Notícia' component={ NewMessageScreen } />
         <MessagesStack.Screen name='Enviar para' component={ SelectReceiverScreen } />
         <MessagesStack.Screen name='Editar' component={ ModifyMessageScreen } />
         

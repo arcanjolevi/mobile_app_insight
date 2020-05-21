@@ -1,3 +1,5 @@
 {
-  "backgroungColor": "#e4e4e4"
+  "backgroungColor": "#e4e4e4",
+  "btn1Color": "#4287f5",
+  "btn1TextColor": "#FFF"
 }

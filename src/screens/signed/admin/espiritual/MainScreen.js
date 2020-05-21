@@ -2,16 +2,17 @@ import * as React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { Image } from 'react-native';
 
-
-import NewsScreen from './NewsScreen';
-
 import logo from '../../../../../assets/w.png';
 
-const NewsStack = createStackNavigator();
+
+import PlansScreen from './plans';
+import NewPlans from './newPlans';
+
+const EspiritualStack = createStackNavigator();
 
 export default function MainScreen (){  
   return (    
-  	  <NewsStack.Navigator
+  	  <EspiritualStack.Navigator
       headerMode="screen" 
       screenOptions={{
         headerStatusBarHeight: 10,            
@@ -27,9 +28,11 @@ export default function MainScreen (){
         }
       }}
       >      
-        <NewsStack.Screen name='Noticias' component={ NewsScreen } />
+        <EspiritualStack.Screen name='Planos' component={ PlansScreen } />
+        <EspiritualStack.Screen name='Novo Plano' component={ NewPlans } />
         
-      </NewsStack.Navigator>   
+        
+      </EspiritualStack.Navigator>   
     );
 };
 const screenOptions = {

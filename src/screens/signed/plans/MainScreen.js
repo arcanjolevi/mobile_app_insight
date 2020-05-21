@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from 'react';                                
 import { createStackNavigator } from '@react-navigation/stack';
 import { View, Image, ActivityIndicator } from 'react-native';
 import AllPlansScreen from './AllPlansScreen';
@@ -11,8 +11,6 @@ import { PlansProvider } from '../../../contexts/Plans';
 const PlansStack = createStackNavigator();
 
 export default function MainScreen (){
-
-  
   return (
     <PlansProvider>
   	  <PlansStack.Navigator
@@ -32,8 +30,8 @@ export default function MainScreen (){
         }}
 		  >
       
-        	<PlansStack.Screen name='Devocionais' component={ MyPlansScreen } />
-          <PlansStack.Screen name='Planos' component={ AllPlansScreen }  />
+        	<PlansStack.Screen name='Planos' component={ MyPlansScreen } />
+          <PlansStack.Screen name='Todos' component={ AllPlansScreen }  />
           <PlansStack.Screen name='Detalhes' component={ PlanDetailsScreen } />
       </PlansStack.Navigator>
     </PlansProvider>

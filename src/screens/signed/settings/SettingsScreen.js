@@ -48,12 +48,6 @@ export default function Settings ({ navigation }){
 						action={ () => navigation.navigate('Profile') }
 					/>
 					<ConfigObject 
-						title={ 'Minha equipe' } 
-						iconName={ 'ios-people' } 
-						navigation={ navigation } 
-						action={ () => navigation.navigate('Team') }
-					/>
-					<ConfigObject 
 						title={ 'Sobre' } 
 						iconName={ 'ios-information-circle' } 
 						navigation={ navigation } 

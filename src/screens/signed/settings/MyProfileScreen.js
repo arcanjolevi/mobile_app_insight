@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { useContext, useState, useEffect } from 'react';
-import { Alert, TextInput, Text, View, ScrollView, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Alert, TextInput, Text, View, ScrollView, TouchableOpacity } from 'react-native';
 import { AsyncStorage } from 'react-native';;
 import api from '../../../services/api';
 import LoadingScreen from '../../LoadingScreen';
@@ -18,6 +18,7 @@ export default function MyProfileScreen ({ navigation }){
     const [ day , setDay ] = useState('');
     const [ month, setMonth ] = useState('');
     const [ year, setYear ] = useState('');
+    const [ course, setCourse ] = useState('');
     const [ isLoading, setIsLoading ] = useState(false);
 
     async function init(){
@@ -29,6 +30,7 @@ export default function MyProfileScreen ({ navigation }){
         setDay(day);
         setMonth(month);
         setYear(year);
+        setCourse(user.course);
     }
 
     useEffect(() => {
@@ -54,7 +56,8 @@ export default function MyProfileScreen ({ navigation }){
                     name: name,
                     institution: institution,
                     whatsapp: whatsapp,
-                    bornDate: `${day}/${month}/${year}`
+                    bornDate: `${day}/${month}/${year}`,
+                    course
                 }, { 
                     headers: {
                     token: token
@@ -105,9 +108,11 @@ export default function MyProfileScreen ({ navigation }){
     }
 
     if(isLoading)
-        return (
-            <LoadingScreen />
-        );
+		return(
+			<View style={{ marginTop: 20 }}>
+				<ActivityIndicator color='#FCDE0F' size={40}/>
+			</View>
+		);
 
     return (
       <View style={{ backgroundColor: config.backgroungColor, flex: 1, alignItems: 'center' }}>
@@ -120,6 +125,7 @@ export default function MyProfileScreen ({ navigation }){
                         <TextInput editable={false} defaultValue={email} onChangeText={text => setEmail(text)} placeholder='Email'  style={{ marginBottom:10, paddingLeft: 10, height: 60, borderRadius: 15, width: '75%', backgroundColor: '#f4f4f4'}}/>
                         <TextInput defaultValue={institution} onChangeText={ t => setInstituition(t)} placeholder='instituição'  style={{ marginBottom:10, paddingLeft: 10, height: 60, borderRadius: 15, width: '75%', backgroundColor: '#f4f4f4'}}/>
                         <TextInput defaultValue={whatsapp} onChangeText={t => setwhatsapp(t)} placeholder='whatsapp'  style={{ marginBottom:10, paddingLeft: 10, height: 60, borderRadius: 15, width: '75%', backgroundColor: '#f4f4f4'}}/>
+                        <TextInput defaultValue={course} onChangeText={t => setCourse(t)} placeholder='Curso'  style={{ marginBottom:10, paddingLeft: 10, height: 60, borderRadius: 15, width: '75%', backgroundColor: '#f4f4f4'}}/>
                         <Text style={{marginBottom: 5, marginLeft: 15, color: '#949494'}}>Data de nascimento</Text>
                         <View style={{ width: '75%', flexDirection: 'row', marginBottom: 10, justifyContent: 'space-between'}}>
 				    		<TextInput defaultValue={day} onEndEditing={correctDate} onChangeText={t => setDay(t)} placeholder='dia' maxLength={2}   keyboardType={'numeric'} style={{width: '20%', backgroundColor: '#f4f4f4', borderRadius: 15, textAlign: 'center'}}></TextInput>

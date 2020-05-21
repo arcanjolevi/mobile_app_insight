@@ -15,7 +15,7 @@ const styleTextInput = {
 
 const styleTextInputMessage = {
 	marginBottom: 10,
-	height: 200,
+	height: 90,
 	borderRadius: 15,
 	width: '100%',
   backgroundColor: '#f4f4f4',
@@ -24,14 +24,14 @@ const styleTextInputMessage = {
 }
 
 export default function NewMessage ({ navigation }){
-	const { postNewMessage } = useContext(AdminContext);
+	const { createNewPrayPlan } = useContext(AdminContext);
 
 	const [ title , setTitle ] = useState('');
-	const [ body, setBody ] = useState('');
-	
+	const [ to, setTo ] = useState('');
+	const [ description, setDescription ] = useState('');
 
 	function handlerPost(){
-		postNewMessage(title, body);
+		createNewPrayPlan(title, description,to);
 		navigation.goBack();
 	}
 
@@ -41,10 +41,15 @@ export default function NewMessage ({ navigation }){
 			<View  style={{ width: '95%', alignItems:'center'}}>
 				<TextInput onChangeText={ t => setTitle(t)} style={styleTextInput}></TextInput>
 			</View>
+
+			<Text>Para:</Text>
+			<View  style={{ width: '95%', alignItems:'center'}}>
+				<TextInput onChangeText={ t => setTo(t)} style={styleTextInput}></TextInput>
+			</View>
 			
-			<Text>Mesagem:</Text>
+			<Text>Descrição:</Text>
 			<View style={{ width: '95%', alignItems:'center'}}>
-				<TextInput onChangeText={ t => setBody(t)} textAlignVertical='top' multiline={true} style={styleTextInputMessage}></TextInput>
+				<TextInput onChangeText={ t => setDescription(t)} textAlignVertical='top' multiline={true} style={styleTextInputMessage}></TextInput>
 			</View>      
       
 			<View style={{ width: '95%', alignItems:'center'}}>
