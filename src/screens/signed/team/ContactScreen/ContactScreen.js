@@ -34,7 +34,7 @@ export default function ContactScreen({ navigation , route }){
         }
       });
     } catch (e) {
-      console.log(e);
+      console.log('Erro ao fazer contato', e);
     }
     setLoading(false)
     navigation.goBack();

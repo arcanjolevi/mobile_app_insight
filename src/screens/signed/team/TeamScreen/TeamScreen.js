@@ -1,25 +1,18 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Text, FlatList, TouchableOpacity, View, Image, ActivityIndicator } from 'react-native';
 import Ion from 'react-native-vector-icons/Ionicons';
-import api from '../../../../services/api';
 
 import style from './style';
 
-export default function TeamScreem ({ navigation }) {
-	const [ refreshing, setRefreshing ] = useState(false);
-	const [ teamsData, setTeamsData ] = useState([]);
+import TeamContext from '../../../../contexts/Teams';
 
-	async function refresh(){
-		setRefreshing(true);
-		try {
-			const response = await api.get('list/all/teams/data');
-			setTeamsData(response.data);
-		} catch (e) {
-			console.log(e);
-		}
-		setRefreshing(false);
-		
+export default function TeamScreem ({ navigation }) {
+
+	const { downloadTeams, refreshing, teamsData } = useContext(TeamContext);
+
+	function refresh(){
+		downloadTeams();
 	}
 
 	useEffect(() => {

@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { Text, View, TouchableOpacity, ScrollView } from 'react-native';
 import Ion from 'react-native-vector-icons/Ionicons';
 import { AsyncStorage } from 'react-native';

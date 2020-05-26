@@ -9,10 +9,15 @@ import TeamDetailsScreen from './TeamDetails/TeamDetailsScreen';
 import PersonalDetailsScreen from './PersonalDetails/PersonalDetailsScreen';
 import ContactScreen from './ContactScreen/ContactScreen';
 
+import { TeamsProvider } from '../../../contexts/Teams';
+
 const TeamStack = createStackNavigator();
+
+
 
 export default function MainScreen (){  
   return (
+    <TeamsProvider>
   	  <TeamStack.Navigator
       	headerMode="screen" 
         screenOptions={{
@@ -28,12 +33,13 @@ export default function MainScreen (){
           	color:'tomato'
           }
         }}
-		  >      
+		  >
       	<TeamStack.Screen name='Equipes' component={ TeamsScreen } />
         <TeamStack.Screen name='Detalhes' component={ TeamDetailsScreen } />
         <TeamStack.Screen name='Integrante' component={ PersonalDetailsScreen } />
         <TeamStack.Screen name='Contato' component={ ContactScreen } />
       </TeamStack.Navigator>
+    </TeamsProvider>
     );
 };
 

@@ -28,7 +28,7 @@ export default function ForgotPassScreen({ navigation }) {
             } catch (e) {
                 setIsLoading(false);
                 alert('Nao foi possivel connectar ou o usuário não existe.');
-                console.log(e);
+                console.log('Erro ao tentar recuperar senha', e);
             }
         }
     }

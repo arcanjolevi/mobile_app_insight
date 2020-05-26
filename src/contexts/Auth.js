@@ -1,6 +1,7 @@
 import React, { createContext, useState, useEffect } from 'react';
 import { AsyncStorage, Alert } from 'react-native';
 import api from '../services/api';
+import { set } from 'react-native-reanimated';
 
 export function AuthProvider ({ children }) {
 
@@ -10,6 +11,9 @@ export function AuthProvider ({ children }) {
 	const [ token, setToken ] = useState('');	
 	const [ admin, setAdmin ] = useState(false);
 	const [ team, setTeam ] = useState(false);
+	const [ messages, setMessages ] = useState([]);
+	const [ refreshing, setRefreshing ] = useState(false);
+	const [ flagUpdatedUser, SetFlagUpdatedUser ] = useState(false);
 
 	async function initAuth () {
 		const t = await AsyncStorage.getItem('userToken');
@@ -18,20 +22,47 @@ export function AuthProvider ({ children }) {
 		const userDataStorage = await AsyncStorage.getItem('userData');
 		setUserData(JSON.parse(userDataStorage));	
 		setIsSigned(!!t);
+		setIsLoading(false);		
+	}
+
+	async function updateUserData(){
+		setIsLoading(true);		
+		try{
+			const response = await api.get(`user/data/${userData._id}`);
+			userData.team = response.data.team;
+			userData.admin = response.data.admin;
+			setAdmin(response.data.admin);
+			console.log('Dados do usuário atualizados');
+		}catch(e){
+			console.log('Erro ao atualizar dados do usuario', e);
+		}
+		SetFlagUpdatedUser(true);
+		console.log('User updated');
+		downloadMessages();
 		setIsLoading(false);
+	} 
+
+	async function downloadMessages(){
+		setRefreshing(true);
+		try{
+			const response = await api.get('list/all/news');
+			setMessages(response.data);
+			await AsyncStorage.setItem('messages', JSON.stringify(messages));
+		}catch(e){
+			console.log('Erro ao baixar messages', e);
+			try {
+				const objStorage = await AsyncStorage.getItem('messages');
+				setMessages(JSON.parse(objStorage));
+			}catch(e2) {
+				console.log('Erro ao carregar msgs do armazenamento', e2);
+			}
+		}
+		setRefreshing(false);
 	}
 
 	useEffect( () => {	
 		initAuth();
 	}, []);
-
-	useEffect(() => {
-		console.log('team', userData.team != '');
-		console.log('admin', userData.admin);
-		setAdmin(userData.admin);
-		setTeam(userData.team != '');
-	}, [userData]);
-
 
 	async function downloadAppData(){
 	
@@ -73,6 +104,7 @@ export function AuthProvider ({ children }) {
 					console.log('Error ao armazenar dados do usuario:', e);
 				}
 				await downloadAppData();
+				downloadMessages();
 				setIsSigned(true);
 			}
 		} catch (e) {
@@ -106,6 +138,8 @@ export function AuthProvider ({ children }) {
 			handleSignOut();
 	}
 
+	
+
   return(
     <AuthContext.Provider value={
     	{ 
@@ -116,7 +150,12 @@ export function AuthProvider ({ children }) {
 				signIn,
 				signOut,
 				admin,
-				team
+				team,
+				updateUserData,
+				flagUpdatedUser,
+				downloadMessages,
+				messages,
+				refreshing
       }
     }>
       {children}
@@ -133,7 +172,13 @@ const AuthContext = createContext({
 		loading: Boolean,
 		user: Object,
 		admin: Boolean,
-		team: Boolean
+		team: Boolean,
+		updateUserData: Function,
+		downloadMessages: Function,
+		messages: Array,
+		refreshing: Boolean,
+		flagUpdatedUser: Boolean
+
 });
 
 export default AuthContext ;

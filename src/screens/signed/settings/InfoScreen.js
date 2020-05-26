@@ -8,7 +8,7 @@ export default function InfoScreen ({ navigation }){
       <View style={{ backgroundColor: config.backgroungColor, flex: 1, alignItems: 'center' }}>
             
             <View style={{ marginTop: 10, width: '95%', backgroundColor: '#fff', padding: 10 }}>
-                <Text style={{ color: '#848484', fontSize: 15, textAlign: 'center' }}>App Insight versão Beta 1.2.0</Text>
+                <Text style={{ color: '#848484', fontSize: 15, textAlign: 'center' }}>App Insight versão Beta 1.2.3</Text>
                 <Text style={{ color: '#848484', fontSize: 15, textAlign: 'center' }}>Contato equipe de desenvolvimento: equipe.app.insight@gmail.com</Text>
             </View>
       </View>

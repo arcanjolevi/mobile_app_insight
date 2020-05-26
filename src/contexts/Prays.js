@@ -81,7 +81,7 @@ export function PraysProvider ({ children }) {
 			setAllPrays(response.data);
 			await AsyncStorage.setItem('allPrays', JSON.stringify(response.data));
 		}catch(e){
-			console.log(e);
+			console.log('Erro ao baixar prays', e);
 			const response = await AsyncStorage.getItem('allPrays');
 			const obj = JSON.parse(response);
 			setAllPrays(obj);

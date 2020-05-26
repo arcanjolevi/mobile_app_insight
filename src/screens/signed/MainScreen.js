@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { Image, View } from 'react-native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack'
@@ -28,7 +28,9 @@ const SignedStack = createStackNavigator();
 
 
 function teamEnable(){
+
 	const { team, admin } = useContext(AuthContext);
+	
 	if(team || admin)
 		return <SignedTab.Screen name={namePrayersScreen} component={prayersStack} />;
 		
@@ -36,6 +38,11 @@ function teamEnable(){
 
 
 function SignedScreen () {
+	const { updateUserData, flagUpdatedUser } = useContext(AuthContext);
+
+		if(!flagUpdatedUser)
+			updateUserData();
+
 	return(
 		<SignedTab.Navigator screenOptions={screenOptions} tabBarOptions={tabBarOptions}>
     		<SignedTab.Screen name={nameHomeScreen} component={homeStack} />
@@ -49,7 +56,6 @@ function SignedScreen () {
 
 
 export default function MainScreen ({ navigation }){
-
   	return (		
 		<SignedStack.Navigator initialRouteName='Signed' >
 			<SignedStack.Screen name="Signed" component={SignedScreen} options={{ headerShown: false }}/>

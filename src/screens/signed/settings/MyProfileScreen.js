@@ -71,7 +71,7 @@ export default function MyProfileScreen ({ navigation }){
             await AsyncStorage.setItem('userData', JSON.stringify(obj));
             setIsLoading(false);
         }catch(e){
-            console.log(e);
+            console.log('Erro ao atualizar dados do usuario no servidor', e);
             setIsLoading(false);
             alert('Não foi possível atualizar. Tente novamente mais tarde.');
         }

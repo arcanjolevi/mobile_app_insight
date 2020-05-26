@@ -1,39 +1,20 @@
 import * as React from 'react';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Text, View, FlatList, AsyncStorage, TouchableOpacity } from 'react-native';
 import Ion from 'react-native-vector-icons/Ionicons';
 import api from '../../../services/api';
 
 const config = require('../../../config/config.json');
 
-
+import AuthContext from '../../../contexts/Auth'; 
 
 export default function HomeScreen() {
+
+	const { downloadMessages, refreshing, messages } = useContext(AuthContext);
 	
-	const [ refreshing, setRefreshing ] = useState(false);
-	const [ messages, setMessages ] = useState([]);
-
-	async function refresh(){
-		setRefreshing(true);
-		try{
-			const response = await api.get('list/all/news');
-			setMessages(response.data);
-			await AsyncStorage.setItem('messages', JSON.stringify(messages));
-		}catch(e){
-			console.log(e);
-			try {
-				const objStorage = await AsyncStorage.getItem('messages');
-				setMessages(JSON.parse(objStorage));
-			}catch(e2) {
-				console.log(e2);
-			}
-		}
-		setRefreshing(false);
+	function refresh(){
+		downloadMessages();
 	}
-
-	useEffect(() => {
-		refresh();
-	}, []);
 
   return (
 		<FlatList 
