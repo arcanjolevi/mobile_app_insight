@@ -7,7 +7,7 @@
 </h4>
 
 <p align="center">
-<a href="https://github.com/arcanjolevi/appInsight">master Project</a> | 
+<a href="https://github.com/arcanjolevi/appInsight">Master Project</a> | 
 <a href="https://github.com/arcanjolevi/backend_app_insight">Backend</a>
 </p>
  
